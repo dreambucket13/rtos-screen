@@ -1,6 +1,8 @@
 /*
- * FreeRTOS SMP Kernel V202110.00
- * Copyright (C) 2020 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
+ * FreeRTOS Kernel <DEVELOPMENT BRANCH>
+ * Copyright (C) 2021 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
+ *
+ * SPDX-License-Identifier: MIT
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of
  * this software and associated documentation files (the "Software"), to deal in
@@ -71,6 +73,7 @@ typedef unsigned long    UBaseType_t;
  * not need to be guarded with a critical section. */
     #define portTICK_TYPE_IS_ATOMIC    1
 #endif
+
 /*-----------------------------------------------------------*/
 
 /* MPU specific constants. */
@@ -220,7 +223,7 @@ typedef struct MPU_SETTINGS
 
 #define portNVIC_INT_CTRL_REG     ( *( ( volatile uint32_t * ) 0xe000ed04 ) )
 #define portNVIC_PENDSVSET_BIT    ( 1UL << 28UL )
-#define portEND_SWITCHING_ISR( xSwitchRequired )    if( xSwitchRequired != pdFALSE ) portYIELD_WITHIN_API()
+#define portEND_SWITCHING_ISR( xSwitchRequired )    do { if( xSwitchRequired != pdFALSE ) portYIELD_WITHIN_API(); } while( 0 )
 #define portYIELD_FROM_ISR( x )                     portEND_SWITCHING_ISR( x )
 /*-----------------------------------------------------------*/
 
@@ -251,12 +254,23 @@ typedef struct MPU_SETTINGS
 extern void vPortEnterCritical( void );
 extern void vPortExitCritical( void );
 
-#define portDISABLE_INTERRUPTS()                               \
-    {                                                          \
-        __set_BASEPRI( configMAX_SYSCALL_INTERRUPT_PRIORITY ); \
-        __DSB();                                               \
-        __ISB();                                               \
-    }
+#if( configENABLE_ERRATA_837070_WORKAROUND == 1 )
+    #define portDISABLE_INTERRUPTS()                               \
+        {                                                          \
+            __disable_interrupt();                                 \
+            __set_BASEPRI( configMAX_SYSCALL_INTERRUPT_PRIORITY ); \
+            __DSB();                                               \
+            __ISB();                                               \
+            __enable_interrupt();                                  \
+        }
+#else
+    #define portDISABLE_INTERRUPTS()                               \
+        {                                                          \
+            __set_BASEPRI( configMAX_SYSCALL_INTERRUPT_PRIORITY ); \
+            __DSB();                                               \
+            __ISB();                                               \
+        }
+#endif
 
 #define portENABLE_INTERRUPTS()                   __set_BASEPRI( 0 )
 #define portENTER_CRITICAL()                      vPortEnterCritical()

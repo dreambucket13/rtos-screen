@@ -312,8 +312,6 @@ configureit
 configuse
 configxt
 configyield
-conifgassert
-conifgsupport
 const
 coproc
 coprocessor
@@ -561,6 +559,7 @@ enablerx
 enabletx
 enametoolong
 endbusres
+endcode
 endian
 endif
 endinit
@@ -995,7 +994,6 @@ ldrb
 ldrbs
 ldub
 len
-lengh
 les
 lexpirecounters
 libc
@@ -1105,6 +1103,7 @@ misc
 misconfiguration
 miso
 misra
+mit
 mmcr
 mmi
 mmr
@@ -1166,10 +1165,10 @@ multidriverenable
 multidrvenable
 mutex
 mutexes
-mutexs
 mux
 muxes
 mv
+mve
 mvfaclo
 mvtacgu
 mvtachi
@@ -1516,9 +1515,11 @@ prttc
 prv
 prvaddcurrenttasktodelayedlist
 prvcheckinterfaces
+prvchecktaskswaitingtermination
 prvcopydatatoqueue
 prvcoroutineflashtask
 prvcoroutineflashworktask
+prvdeletetcb
 prvexitfunction
 prvgettimens
 prvheapinit
@@ -1643,7 +1644,6 @@ pxcrcb
 pxcreatedtask
 pxcurrentcoroutine
 pxcurrenttcb
-pxcurrenttcbs
 pxcurrenttcbconst
 pxcurrenttimerlist
 pxdelayedcoroutinelist
@@ -1693,10 +1693,12 @@ pxqueuesetcontainer
 pxramstack
 pxreadycoroutinelists
 pxreadytaskslists
+pxreceivecompletedcallback
 pxregions
 pxresult
 pxrxedmessage
 pxsemaphorebuffer
+pxsendcompletedcallback
 pxstack
 pxstackbase
 pxstackbuffer
@@ -1711,6 +1713,7 @@ pxtask
 pxtaskbuffer
 pxtaskcode
 pxtaskdefinition
+pxtaskin
 pxtaskstatus
 pxtaskstatusarray
 pxtasktag
@@ -1760,7 +1763,6 @@ rdc
 rdr
 rdrf
 rdy
-reacquisition
 readbit
 readme
 readvalue
@@ -1982,6 +1984,7 @@ softreset
 sp
 spck
 spd
+spdx
 sph
 spi
 spidis
@@ -2144,7 +2147,6 @@ tfmr
 tgo
 thalt
 therad
-thie
 thr
 threadstate
 thu
@@ -2310,6 +2312,8 @@ ullporttaskhasfpucontext
 ulmair
 ulmask
 ulmatchvalueforonetick
+ulnumberofheapallocations
+ulnumberofheapfrees
 ulong
 ulparameter
 ulparameters
@@ -2332,8 +2336,8 @@ ulstatsaspercentage
 ulstoppedtimercompensation
 ultablebase
 ultaskgetidleruntimecounter
+ultaskgetidleruntimepercent
 ultaskhasfpucontext
-ultasknotificationtakeindexed
 ultasknotifystateclear
 ultasknotifytake
 ultasknotifytakeindexed
@@ -2341,6 +2345,8 @@ ultasknotifyvalueclear
 ultasknotifyvalueclearindexed
 ultaskswitchedintime
 ultaskswitchrequested
+ultotalmemoryallocations
+ultotalmemoryfrees
 ultotalruntime
 ultotalruntimediv
 ulusingfpu
@@ -2392,7 +2398,6 @@ utf
 utilised
 utilises
 uxarraysize
-uxautoreload
 uxbasepriority
 uxbits
 uxbitstoclear
@@ -2400,8 +2405,6 @@ uxbitstoset
 uxbitstowait
 uxbitstowaitfor
 uxcontrolbits
-uxcoreaffinitymask
-uxcoreaffinityinheritancemask
 uxcriticalnesting
 uxcurrenteventbits
 uxcurrentnumberoftasks
@@ -2427,9 +2430,7 @@ uxmaxcount
 uxmessageswaiting
 uxnewpriority
 uxoriginalpriority
-uxpendedcounts
 uxportcomparesetextram
-uxprevschedulersuspended
 uxpriority
 uxprioritytouse
 uxqueue
@@ -2444,11 +2445,13 @@ uxsavedmaskvalue
 uxsavedtaskstackpointer
 uxschedulersuspended
 uxsemaphoregetcount
+uxsemaphoregetcountfromisr
 uxstate
 uxstreambuffernumber
 uxtaskgetnumberoftasks
 uxtaskgetstackhighwatermark
 uxtaskgetsystemstate
+uxtaskgettasknumber
 uxtasknumber
 uxtaskpriorityget
 uxtaskprioritygetfromisr
@@ -2476,6 +2479,7 @@ vapplicationgetidletaskmemory
 vapplicationgettimertaskmemory
 vapplicationidlehook
 vapplicationirqhandler
+vapplicationmallocfailedhook
 vapplicationsetuptickinterrupt
 vapplicationsetupticktimerinterrupt
 vapplicationsetuptimerinterrupt
@@ -2598,6 +2602,7 @@ vtaskremovefromunorderedeventlist
 vtaskresume
 vtaskresumefromisr
 vtasksetapplicationtasktag
+vtasksettasknumber
 vtasksettimeout
 vtasksettimeoutstate
 vtaskstartscheduler
@@ -2648,7 +2653,6 @@ wdv
 westat
 wfi
 winavr
-witin
 wizc
 wl
 wo
@@ -2669,6 +2673,7 @@ xabab
 xabac
 xactivetimerlist
 xaltregions
+xautoreload
 xavailableheapspaceinbytes
 xb
 xbacklighttimer
@@ -2702,7 +2707,6 @@ xcommandtime
 xcommsrxqueue
 xconsttickcount
 xcopyposition
-xcoreid
 xcoroutinecreate
 xcoroutinepreviouslywoken
 xcoroutinequeue
@@ -2776,6 +2780,9 @@ xgenericlistitem
 xgetfreestackspace
 xhandle
 xhead
+xheapbytescurrentlyallocated
+xheapbytescurrentlyheld
+xheapbyteshighwatermark
 xheapregions
 xhigherpriorittaskwoken
 xhigherprioritytaskwoken
@@ -2791,7 +2798,7 @@ xinterruptcontroller
 xinterruptdescriptortable
 xisfeasable
 xisfeasible
-xisidle
+xisinsideisr
 xismessagebuffer
 xisprivileged
 xitemvalue
@@ -2800,10 +2807,10 @@ xlastwaketime
 xlength
 xlist
 xlistend
-xlowestpriority
 xmair
 xmaxcount
 xmaxexpirycountbeforestopping
+xmaxheapbyteseverheld
 xmaxsize
 xmc
 xmessage
@@ -2870,7 +2877,6 @@ xportregistercinterrupthandler
 xportregisterdump
 xportstartfirsttask
 xportstartscheduler
-xpreemptiondisable
 xpsr
 xqueue
 xqueueaddtoset
@@ -2907,7 +2913,6 @@ xram
 xrbarconst
 xreceivedbytes
 xreceivedlength
-xrecievedbytes
 xregion
 xregions
 xregionssettings
@@ -3027,8 +3032,6 @@ xtasknumber
 xtaskremovefromeventlist
 xtaskresumeall
 xtaskresumefromisr
-xtskrunningoncore
-xtaskrunstate
 xtaskswaitingforbits
 xtaskswaitingtermination
 xtaskswaitingtoreceive
@@ -3065,9 +3068,9 @@ xtimercreate
 xtimercreated
 xtimercreatestatic
 xtimerdelete
-xtimergenericcommand
 xtimergetexpirytime
 xtimergetperiod
+xtimergetreloadmode
 xtimergettimerdaemontaskhandle
 xtimeristimeractive
 xtimerlistitem
@@ -3087,6 +3090,7 @@ xtimerstartfromisr
 xtimerstop
 xtimerstopfromisr
 xtimertaskhandle
+xtlsblock
 xtos
 xtriggerlevel
 xtriggerlevelbytes
@@ -3098,7 +3102,5 @@ xwantedsize
 xwasdelayed
 xwritevalue
 xxr
-xyieldfortask
 xyieldpending
-xyieldpendings
 xzr

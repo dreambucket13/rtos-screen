@@ -1,6 +1,8 @@
 /*
- * FreeRTOS SMP Kernel V202110.00
- * Copyright (C) 2020 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
+ * FreeRTOS Kernel <DEVELOPMENT BRANCH>
+ * Copyright (C) 2021 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
+ *
+ * SPDX-License-Identifier: MIT
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of
  * this software and associated documentation files (the "Software"), to deal in
@@ -68,6 +70,7 @@ typedef unsigned long    UBaseType_t;
  * not need to be guarded with a critical section. */
     #define portTICK_TYPE_IS_ATOMIC    1
 #endif
+
 /*-----------------------------------------------------------*/
 
 /* MPU specific constants. */
@@ -226,7 +229,7 @@ typedef struct MPU_SETTINGS
 
 #define portNVIC_INT_CTRL_REG     ( *( ( volatile uint32_t * ) 0xe000ed04 ) )
 #define portNVIC_PENDSVSET_BIT    ( 1UL << 28UL )
-#define portEND_SWITCHING_ISR( xSwitchRequired )    if( xSwitchRequired ) portNVIC_INT_CTRL_REG = portNVIC_PENDSVSET_BIT
+#define portEND_SWITCHING_ISR( xSwitchRequired )    do { if( xSwitchRequired ) portNVIC_INT_CTRL_REG = portNVIC_PENDSVSET_BIT; } while( 0 )
 #define portYIELD_FROM_ISR( x )                     portEND_SWITCHING_ISR( x )
 /*-----------------------------------------------------------*/
 
@@ -332,9 +335,15 @@ static portFORCE_INLINE void vPortRaiseBASEPRI( void )
         /* Set BASEPRI to the max syscall priority to effect a critical
          * section. */
 /* *INDENT-OFF* */
+    #if ( configENABLE_ERRATA_837070_WORKAROUND == 1 )
+        cpsid i
+    #endif
         msr basepri, ulNewBASEPRI
         dsb
         isb
+    #if ( configENABLE_ERRATA_837070_WORKAROUND == 1 )
+        cpsie i
+    #endif
 /* *INDENT-ON* */
     }
 }
@@ -364,9 +373,15 @@ static portFORCE_INLINE uint32_t ulPortRaiseBASEPRI( void )
          * section. */
 /* *INDENT-OFF* */
         mrs ulReturn, basepri
+    #if ( configENABLE_ERRATA_837070_WORKAROUND == 1 )
+        cpsid i
+    #endif
         msr basepri, ulNewBASEPRI
         dsb
         isb
+    #if ( configENABLE_ERRATA_837070_WORKAROUND == 1 )
+        cpsie i
+    #endif
 /* *INDENT-ON* */
     }
 

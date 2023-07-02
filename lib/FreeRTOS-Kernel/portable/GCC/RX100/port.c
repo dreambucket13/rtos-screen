@@ -1,6 +1,8 @@
 /*
- * FreeRTOS SMP Kernel V202110.00
- * Copyright (C) 2020 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
+ * FreeRTOS Kernel <DEVELOPMENT BRANCH>
+ * Copyright (C) 2021 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
+ *
+ * SPDX-License-Identifier: MIT
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of
  * this software and associated documentation files (the "Software"), to deal in
@@ -22,7 +24,6 @@
  * https://www.FreeRTOS.org
  * https://github.com/FreeRTOS
  *
- * 1 tab == 4 spaces!
  */
 
 /*-----------------------------------------------------------
@@ -98,12 +99,12 @@ static void prvStartFirstTask( void ) __attribute__((naked));
  */
 #if ( configINCLUDE_PLATFORM_H_INSTEAD_OF_IODEFINE_H == 1 )
 
-    R_BSP_PRAGMA_INTERRUPT( vSoftwareInterruptISR, VECT( ICU, SWINT ) )
-    R_BSP_ATTRIB_INTERRUPT void vSoftwareInterruptISR( void ) __attribute__( ( naked ) );
+    R_BSP_PRAGMA_INTERRUPT( vPortSoftwareInterruptISR, VECT( ICU, SWINT ) )
+    R_BSP_ATTRIB_INTERRUPT void vPortSoftwareInterruptISR( void ) __attribute__( ( naked ) );
 
 #else /* configINCLUDE_PLATFORM_H_INSTEAD_OF_IODEFINE_H */
 
-    void vSoftwareInterruptISR( void ) __attribute__( ( naked ) );
+    void vPortSoftwareInterruptISR( void ) __attribute__( ( naked ) );
 
 #endif /* configINCLUDE_PLATFORM_H_INSTEAD_OF_IODEFINE_H  */
 
@@ -113,12 +114,12 @@ static void prvStartFirstTask( void ) __attribute__((naked));
  */
 #if ( configINCLUDE_PLATFORM_H_INSTEAD_OF_IODEFINE_H == 1 )
 
-    R_BSP_PRAGMA_INTERRUPT( vTickISR, _VECT( configTICK_VECTOR ) )
-    R_BSP_ATTRIB_INTERRUPT void vTickISR( void ); /* Do not add __attribute__( ( interrupt ) ). */
+    R_BSP_PRAGMA_INTERRUPT( vPortTickISR, _VECT( configTICK_VECTOR ) )
+    R_BSP_ATTRIB_INTERRUPT void vPortTickISR( void ); /* Do not add __attribute__( ( interrupt ) ). */
 
 #else /* configINCLUDE_PLATFORM_H_INSTEAD_OF_IODEFINE_H */
 
-    void vTickISR( void ) __attribute__( ( interrupt ) );
+    void vPortTickISR( void ) __attribute__( ( interrupt ) );
 
 #endif /* configINCLUDE_PLATFORM_H_INSTEAD_OF_IODEFINE_H */
 

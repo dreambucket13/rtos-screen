@@ -98,12 +98,11 @@
 #define configTIMER_TASK_STACK_DEPTH            1024
 
 /* Interrupt nesting behaviour configuration. */
-
-//https://developer.arm.com/documentation/dui0662/b/Cortex-M0--Peripherals/Nested-Vectored-Interrupt-Controller/Interrupt-Priority-Registers
-#define configKERNEL_INTERRUPT_PRIORITY         192 //lowest priority
-#define configMAX_SYSCALL_INTERRUPT_PRIORITY    127 //going in steps of 64, should be priority 2
-#define configMAX_API_CALL_INTERRUPT_PRIORITY   63 //priority 1
-
+/*
+#define configKERNEL_INTERRUPT_PRIORITY         [dependent of processor]
+#define configMAX_SYSCALL_INTERRUPT_PRIORITY    [dependent on processor and application]
+#define configMAX_API_CALL_INTERRUPT_PRIORITY   [dependent on processor and application]
+*/
 
 #if FREE_RTOS_KERNEL_SMP // set by the RP2040 SMP port of FreeRTOS
 /* SMP port only */

@@ -1,6 +1,8 @@
 /*
- * FreeRTOS SMP Kernel V202110.00
- * Copyright (C) 2020 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
+ * FreeRTOS Kernel <DEVELOPMENT BRANCH>
+ * Copyright (C) 2021 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
+ *
+ * SPDX-License-Identifier: MIT
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of
  * this software and associated documentation files (the "Software"), to deal in
@@ -22,11 +24,11 @@
  * https://www.FreeRTOS.org
  * https://github.com/FreeRTOS
  *
- * 1 tab == 4 spaces!
  */
 
 /* Standard includes. */
 #include <stdlib.h>
+#include <string.h>
 
 /* Scheduler includes. */
 #include "FreeRTOS.h"
@@ -357,7 +359,7 @@ uint32_t ulAPSR;
 		value. */
 		*pucFirstUserPriorityRegister = ulOriginalPriority;
 	}
-	#endif /* conifgASSERT_DEFINED */
+	#endif /* configASSERT_DEFINED */
 
 
 	/* Only continue if the CPU is not in User mode.  The CPU must be in a

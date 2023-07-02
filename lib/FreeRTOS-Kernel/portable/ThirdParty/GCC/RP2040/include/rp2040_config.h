@@ -1,5 +1,5 @@
 /*
- * FreeRTOS SMP Kernel V202110.00
+ * FreeRTOS Kernel V10.4.3
  * Copyright (C) 2020 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
  * Copyright (c) 2021 Raspberry Pi (Trading) Ltd.
  *
@@ -61,25 +61,6 @@ extern "C" {
     #if LIB_PICO_TIME
         #define configSUPPORT_PICO_TIME_INTEROP 1
     #endif
-#endif
-
-#if (configNUM_CORES > 1)
-    /* configTICK_CORE indicates which core should handle the SysTick
-     * interrupts */
-    #ifndef configTICK_CORE
-        #define configTICK_CORE 0
-    #endif
-#endif
-
-/* This SMP port requires two spin locks, which are claimed from the SDK.
- * the spin lock numbers to be used are defined statically and defaulted here
- * to the values nominally set aside for RTOS by the SDK */
-#ifndef configSMP_SPINLOCK_0
-    #define configSMP_SPINLOCK_0 PICO_SPINLOCK_ID_OS1
-#endif
-
-#ifndef configSMP_SPINLOCK_1
-    #define configSMP_SPINLOCK_1 PICO_SPINLOCK_ID_OS2
 #endif
 
 #ifdef __cplusplus

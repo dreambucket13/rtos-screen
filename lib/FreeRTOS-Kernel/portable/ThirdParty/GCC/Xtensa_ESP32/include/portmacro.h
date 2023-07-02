@@ -1,66 +1,60 @@
 /*
- *  FreeRTOS V8.2.0 - Copyright (C) 2015 Real Time Engineers Ltd.
- *  All rights reserved
+ * SPDX-FileCopyrightText: 2017 Amazon.com, Inc. or its affiliates
+ * SPDX-FileCopyrightText: 2015-2019 Cadence Design Systems, Inc.
  *
- *  VISIT https://www.FreeRTOS.org TO ENSURE YOU ARE USING THE LATEST VERSION.
+ * SPDX-License-Identifier: MIT
  *
- ***************************************************************************
- *                                                                       *
- *    FreeRTOS provides completely free yet professionally developed,    *
- *    robust, strictly quality controlled, supported, and cross          *
- *    platform software that has become a de facto standard.             *
- *                                                                       *
- *    Help yourself get started quickly and support the FreeRTOS         *
- *    project by purchasing a FreeRTOS tutorial book, reference          *
- *    manual, or both from: https://www.FreeRTOS.org/Documentation       *
- *                                                                       *
- *    Thank you!                                                         *
- *                                                                       *
- ***************************************************************************
+ * SPDX-FileContributor: 2016-2022 Espressif Systems (Shanghai) CO LTD
+ */
+/*
+ * FreeRTOS Kernel V10.4.3
+ * Copyright (C) 2017 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
  *
- *  This file is part of the FreeRTOS distribution.
+ * Permission is hereby granted, free of charge, to any person obtaining a copy of
+ * this software and associated documentation files (the "Software"), to deal in
+ * the Software without restriction, including without limitation the rights to
+ * use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
+ * the Software, and to permit persons to whom the Software is furnished to do so,
+ * subject to the following conditions:
  *
- *  FreeRTOS is free software; you can redistribute it and/or modify it under
- *  the terms of the GNU General Public License (version 2) as published by the
- *  Free Software Foundation >>!AND MODIFIED BY!<< the FreeRTOS exception.
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software. If you wish to use our Amazon
+ * FreeRTOS name, please do so in a fair use way that does not cause confusion.
  *
- *  >>!   NOTE: The modification to the GPL is included to allow you to     !<<
- *  >>!   distribute a combined work that includes FreeRTOS without being   !<<
- *  >>!   obliged to provide the source code for proprietary components     !<<
- *  >>!   outside of the FreeRTOS kernel.                                   !<<
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
+ * FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+ * COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
+ * IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+ * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  *
- *  FreeRTOS is distributed in the hope that it will be useful, but WITHOUT ANY
- *  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- *  FOR A PARTICULAR PURPOSE.  Full license text is available from the following
- *  link: https://www.FreeRTOS.org/a00114.html
+ * https://www.FreeRTOS.org
+ * https://github.com/FreeRTOS
  *
+ * 1 tab == 4 spaces!
+ */
+
+/*
+ * Copyright (c) 2015-2019 Cadence Design Systems, Inc.
  *
- ***************************************************************************
- *                                                                       *
- *    Having a problem?  Start by reading the FAQ "My application does   *
- *    not run, what could be wrong?"                                     *
- *                                                                       *
- *    https://www.FreeRTOS.org/FAQHelp.html                              *
- *                                                                       *
- ***************************************************************************
+ * Permission is hereby granted, free of charge, to any person obtaining
+ * a copy of this software and associated documentation files (the
+ * "Software"), to deal in the Software without restriction, including
+ * without limitation the rights to use, copy, modify, merge, publish,
+ * distribute, sublicense, and/or sell copies of the Software, and to
+ * permit persons to whom the Software is furnished to do so, subject to
+ * the following conditions:
  *
- *  https://www.FreeRTOS.org - Documentation, books, training, latest versions,
- *  license and Real Time Engineers Ltd. contact details.
+ * The above copyright notice and this permission notice shall be included
+ * in all copies or substantial portions of the Software.
  *
- *  https://www.FreeRTOS.org/plus - A selection of FreeRTOS ecosystem products,
- *  including FreeRTOS+Trace - an indispensable productivity tool, a DOS
- *  compatible FAT file system, and our tiny thread aware UDP/IP stack.
- *
- *  https://www.highintegritysystems.com/openrtos/ - Real Time Engineers ltd
- *  license FreeRTOS to High Integrity Systems to sell under the OpenRTOS brand.
- *  Low cost OpenRTOS licenses offer ticketed support, indemnification
- *  and middleware.
- *
- *  https://www.highintegritysystems.com/safertos/ - High Integrity Systems
- *  also provide a safety engineered and independently SIL3 certified version
- *  for use in safety and mission critical applications that require
- *  provable dependability.
- *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+ * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+ * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+ * IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
+ * CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+ * TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+ * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
 #ifndef PORTMACRO_H
@@ -87,6 +81,9 @@
 
     #include <esp_heap_caps.h>
     #include "soc/soc_memory_layout.h"
+#if (ESP_IDF_VERSION >= ESP_IDF_VERSION_VAL(4, 2, 0))
+    #include "soc/compare_set.h"
+#endif /* ESP_IDF_VERSION >= ESP_IDF_VERSION_VAL(4, 2, 0) */
 
 /*#include "xtensa_context.h" */
 
@@ -353,11 +350,11 @@
                                      uint32_t compare,
                                      uint32_t * set );
         #else
-        static inline void uxPortCompareSetExtram(volatile uint32_t *addr, uint32_t compare, uint32_t *set) 
+        static inline void uxPortCompareSetExtram(volatile uint32_t *addr, uint32_t compare, uint32_t *set)
         {
-        #if defined(CONFIG_ESP32_SPIRAM_SUPPORT)    
+        #if defined(CONFIG_ESP32_SPIRAM_SUPPORT)
             compare_and_set_extram(addr, compare, set);
-        #endif    
+        #endif
         }
         #endif
 
@@ -437,30 +434,30 @@
 
     /*-----------------------------------------------------------*/
 
-    #if (ESP_IDF_VERSION >= ESP_IDF_VERSION_VAL(4, 2, 0))    
+    #if (ESP_IDF_VERSION >= ESP_IDF_VERSION_VAL(4, 2, 0))
     /* Architecture specific optimisations. */
-    
+
     #if configUSE_PORT_OPTIMISED_TASK_SELECTION == 1
-    
+
     /* Check the configuration. */
     #if( configMAX_PRIORITIES > 32 )
         #error configUSE_PORT_OPTIMISED_TASK_SELECTION can only be set to 1 when configMAX_PRIORITIES is less than or equal to 32.  It is very rare that a system requires more than 10 to 15 different priorities as tasks that share a priority will time slice.
     #endif
-    
+
     /* Store/clear the ready priorities in a bit map. */
     #define portRECORD_READY_PRIORITY( uxPriority, uxReadyPriorities ) ( uxReadyPriorities ) |= ( 1UL << ( uxPriority ) )
     #define portRESET_READY_PRIORITY( uxPriority, uxReadyPriorities ) ( uxReadyPriorities ) &= ~( 1UL << ( uxPriority ) )
-    
+
     /*-----------------------------------------------------------*/
-    
+
     #define portGET_HIGHEST_PRIORITY( uxTopPriority, uxReadyPriorities ) uxTopPriority = ( 31 - __builtin_clz( ( uxReadyPriorities ) ) )
-    
+
     #endif /* configUSE_PORT_OPTIMISED_TASK_SELECTION */
 
     #endif /* ESP_IDF_VERSION >= ESP_IDF_VERSION_VAL(4, 2, 0) */
-    
+
     /*-----------------------------------------------------------*/
-    
+
 
     void _xt_coproc_release( volatile void * coproc_sa_base );
 
@@ -548,6 +545,10 @@
         void exit( int );
         #define configASSERT( x )    if( !( x ) ) { porttracePrint( -1 ); printf( "\nAssertion failed in %s:%d\n", __FILE__, __LINE__ ); exit( -1 ); }
     #endif
+
+/* Barriers */
+    #define portMEMORY_BARRIER()    __asm volatile ( "" ::: "memory" )
+
 
 #endif // __ASSEMBLER__
 
