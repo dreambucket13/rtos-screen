@@ -1,3 +1,5 @@
+set(NAME "rtos-screen")
+
 add_executable(${NAME}
         main.cpp
         Agent.cpp

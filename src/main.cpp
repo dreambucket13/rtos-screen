@@ -97,7 +97,7 @@ void mainTask(void *params){
 	ScreenWriter blink(&screen, core0);
 	ScreenWriter blink1(&screen, core1);
 
-	printf("Main task started\n");
+	printf("WOOOOO2 Main task started\n");
 
 	blink.start("Blink 0", TASK_PRIORITY + 1UL);
 	blink1.start("Blink 1", TASK_PRIORITY + 1UL);
