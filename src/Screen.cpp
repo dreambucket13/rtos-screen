@@ -93,8 +93,6 @@ Screen::~Screen() {
         // update screen
         st7789->update(graphics);
 
-		vTaskDelay(2000);
-
 		xSemaphoreGive(xSem);
 
 		return true;
