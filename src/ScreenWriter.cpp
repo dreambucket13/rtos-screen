@@ -27,8 +27,6 @@ void ScreenWriter::run(){
 	printf("Screen Writer Started\n");
 
 	while (true) { // Loop forever
-
-		printf("%s on Core %d\n", pName, getCore());
 		
 		if (pSharedScreen != NULL){
 			
