@@ -32,7 +32,7 @@ public:
 	 */
     ~Screen();
 
-	bool WriteToScreen(std::string input);
+	bool WriteToScreen(std::string& input);
 
 protected:
 

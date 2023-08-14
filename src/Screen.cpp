@@ -13,6 +13,7 @@
 #include <math.h>
 #include <vector>
 #include <cstdlib>
+#include <iostream>
 
 #include "libraries/pico_display_2/pico_display_2.hpp"
 #include "drivers/st7789/st7789.hpp"
@@ -52,7 +53,10 @@ Screen::Screen() {
 	if (xSem == NULL){
 		printf("ERROR could not create semaphore\n");
 	} else {
-		xSemaphoreGive(xSem);
+		BaseType_t semaphoreStatus = xSemaphoreGive(xSem);
+		if (semaphoreStatus == pdFALSE){
+			printf("Failed to give semaphore\n");
+		}
 	}
 
 }
@@ -73,15 +77,13 @@ Screen::~Screen() {
 
 
 
- bool Screen::WriteToScreen(std::string text_to_display){
+ bool Screen::WriteToScreen(std::string& text_to_display){
 
 	if (xSemaphoreTake(xSem, 0) == pdTRUE){
 
-		printf("Writing from %s", text_to_display);
-
 		Pen BG = graphics->create_pen(120, 40, 60);
 		Pen WHITE = graphics->create_pen(255, 255, 255);
-		st7789->set_backlight(255);
+		st7789->set_backlight(128);
 		graphics->set_pen(BG);
     	graphics->clear();
 
@@ -93,6 +95,7 @@ Screen::~Screen() {
         // update screen
         st7789->update(graphics);
 
+		//it's me, hi, i'm the problem it's me
 		xSemaphoreGive(xSem);
 
 		return true;

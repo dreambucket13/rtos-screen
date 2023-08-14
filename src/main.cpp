@@ -21,6 +21,8 @@
 #include "Screen.h"
 #include "ScreenWriter.h"
 #include "Heartbeat.h"
+#include "Serial.h"
+#include "printfWriter.h"
 
 
 //Standard Task priority
@@ -91,16 +93,25 @@ void runTimeStats(   ){
  */
 void mainTask(void *params){
 
-	Screen screen;
-	std::string core0("Core 0");
-	std::string core1("Core 1");
-	ScreenWriter blink(&screen, core0);
-	ScreenWriter blink1(&screen, core1);
+	//Screen screen;
+	//std::string string1("meow2");
+	// std::string core1("Core 1");
+	//ScreenWriter blink(&screen, string1);
+	// ScreenWriter blink1(&screen, core1);
+	//blink.start("Blink 0", TASK_PRIORITY + 1UL);
 
-	printf("WOOOOO2 Main task started\n");
 
-	blink.start("Blink 0", TASK_PRIORITY + 1UL);
-	blink1.start("Blink 1", TASK_PRIORITY + 1UL);
+	Serial com;
+	std::string task1String("Task 1");
+	std::string task2String("Task 2");
+
+	printfWriter task1(&com, task1String);
+	printfWriter task2(&com, task2String);
+
+	task1.start("Task 1", TASK_PRIORITY);
+	task2.start("Task 2", TASK_PRIORITY);
+
+	printf("Main task started.\n");
 
 	while (true) { // Loop forever
 		runTimeStats();

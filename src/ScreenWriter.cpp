@@ -28,6 +28,8 @@ void ScreenWriter::run(){
 
 	while (true) { // Loop forever
 		
+		printf("Stack high water for screen: %d\n", this->getStakHighWater());
+
 		if (pSharedScreen != NULL){
 			
 			while (pSharedScreen->WriteToScreen(text_to_display) == false){
@@ -35,7 +37,7 @@ void ScreenWriter::run(){
 			}
 		}
 
-		vTaskDelay(DELAY);
+		//vTaskDelay(DELAY);
 	}
 
 }

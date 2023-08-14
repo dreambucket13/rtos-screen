@@ -17,7 +17,6 @@ class ScreenWriter : public Agent{
 public:
 	/***
 	 * Constructor
-	 * @param gp - GPIO Pad number for LED
 	 */
 	ScreenWriter(Screen *shared=NULL, std::string text_to_display="Default");
 

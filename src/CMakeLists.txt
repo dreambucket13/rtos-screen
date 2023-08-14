@@ -6,6 +6,8 @@ add_executable(${NAME}
         Screen.cpp
         ScreenWriter.cpp
         Heartbeat.cpp
+        Serial.cpp
+        printfWriter.cpp        
         )
 
 
