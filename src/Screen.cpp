@@ -66,12 +66,12 @@ Screen::Screen() {
  */
 Screen::~Screen() {
 
-    delete st7789;
-    delete graphics;
+    // delete st7789;
+    // delete graphics;
 
-	if (xSem != NULL){
-		vSemaphoreDelete(xSem);
-	}
+	// if (xSem != NULL){
+	// 	vSemaphoreDelete(xSem);
+	// }
 
 }
 
@@ -94,6 +94,9 @@ Screen::~Screen() {
 
         // update screen
         st7789->update(graphics);
+
+		//limit how often screen updates
+		vTaskDelay(500 / portTICK_PERIOD_MS);
 
 		//it's me, hi, i'm the problem it's me
 		xSemaphoreGive(xSem);

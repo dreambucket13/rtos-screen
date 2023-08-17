@@ -27,8 +27,6 @@ void ScreenWriter::run(){
 	printf("Screen Writer Started\n");
 
 	while (true) { // Loop forever
-		
-		printf("Stack high water for screen: %d\n", this->getStakHighWater());
 
 		if (pSharedScreen != NULL){
 			
@@ -37,7 +35,9 @@ void ScreenWriter::run(){
 			}
 		}
 
-		//vTaskDelay(DELAY);
+		//ensure we yield to other tasks
+		vTaskDelay (1000 / portTICK_RATE_MS);
+
 	}
 
 }

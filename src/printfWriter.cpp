@@ -34,6 +34,7 @@ void printfWriter::run(){
 				//Keep checking
 			}
 
+			//ensure we yield to other tasks
 			vTaskDelay (1000 / portTICK_RATE_MS);
 		}
 

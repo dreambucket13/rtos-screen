@@ -93,13 +93,14 @@ void runTimeStats(   ){
  */
 void mainTask(void *params){
 
-	//Screen screen;
-	//std::string string1("meow2");
-	// std::string core1("Core 1");
-	//ScreenWriter blink(&screen, string1);
-	// ScreenWriter blink1(&screen, core1);
-	//blink.start("Blink 0", TASK_PRIORITY + 1UL);
+	Screen screen;
+	std::string ScreenString1("Screen 1!");
+	std::string ScreenString2("Screen 2!");
+	ScreenWriter screen1(&screen, ScreenString1);
+	ScreenWriter screen2(&screen, ScreenString1);
 
+	screen1.start("Screen Task 1", TASK_PRIORITY + 1UL);
+	screen2.start("Screen Task 2", TASK_PRIORITY + 1UL);
 
 	Serial com;
 	std::string task1String("Task 1");
@@ -108,8 +109,8 @@ void mainTask(void *params){
 	printfWriter task1(&com, task1String);
 	printfWriter task2(&com, task2String);
 
-	task1.start("Task 1", TASK_PRIORITY);
-	task2.start("Task 2", TASK_PRIORITY);
+	task1.start("COM Task 1", TASK_PRIORITY + 2UL);
+	task2.start("COM Task 2", TASK_PRIORITY + 2UL);
 
 	printf("Main task started.\n");
 
