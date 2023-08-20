@@ -24,7 +24,7 @@ printfWriter::~printfWriter() {
 */
 void printfWriter::run(){
 
-	printf("Screen Writer Started from %s\n",text_to_display.c_str());
+	printf("Serial Writer Started from %s\n",text_to_display.c_str());
 
 	while (true) { // Loop forever
 

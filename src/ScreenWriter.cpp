@@ -36,7 +36,7 @@ void ScreenWriter::run(){
 		}
 
 		//ensure we yield to other tasks
-		vTaskDelay (1000 / portTICK_RATE_MS);
+		vTaskDelay (2000 / portTICK_PERIOD_MS);
 
 	}
 
@@ -47,5 +47,5 @@ void ScreenWriter::run(){
  * @return - words
  */
 configSTACK_DEPTH_TYPE ScreenWriter::getMaxStackSize(){
-	return 150;
+	return 300; //was 150
 }

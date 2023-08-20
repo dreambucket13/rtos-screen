@@ -81,6 +81,8 @@ Screen::~Screen() {
 
 	if (xSemaphoreTake(xSem, 0) == pdTRUE){
 
+		printf("Printing %s to screen.\n", text_to_display.c_str());
+
 		Pen BG = graphics->create_pen(120, 40, 60);
 		Pen WHITE = graphics->create_pen(255, 255, 255);
 		st7789->set_backlight(128);
@@ -95,10 +97,10 @@ Screen::~Screen() {
         // update screen
         st7789->update(graphics);
 
+
 		//limit how often screen updates
 		vTaskDelay(500 / portTICK_PERIOD_MS);
 
-		//it's me, hi, i'm the problem it's me
 		xSemaphoreGive(xSem);
 
 		return true;
